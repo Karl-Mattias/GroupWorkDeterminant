@@ -2,7 +2,18 @@ import java.util.ArrayList;
 
 
 //Main klassis välja kutsed
+//ArrayList c = new ArrayList();
+//ArrayList r1 = new ArrayList();
+//ArrayList r2 = new ArrayList();
+//r1.add(5.0);
+//r1.add(3.0);
+//r2.add(1.0);
+//r2.add(1.0);
+//c.add(r1);
+//c.add(r2);
 //Maatriks AA = new Maatriks(Maatriks kujul ArrayList ArrayList Double); 
+//ArrayList<ArrayList<Integer>> x = new ArrayList<ArrayList<Integer>>();
+//x=Perm.vastus();
 //AA.arvutaDeterminant(Perm.vastus())
 
 
@@ -10,10 +21,10 @@ import java.util.ArrayList;
 public class Maatriks {
 	
 	private int suurus;
-	public ArrayList<ArrayList<double>> MatA= new ArrayList<ArrayList<double>>(); // ei oska siia double sisse anda
+	public ArrayList<ArrayList<Double>> MatA= new ArrayList<ArrayList<Double>>();
 	
 	
-	Maatriks( ArrayList<ArrayList<double>> MatA){               // ja siin sama
+	Maatriks( ArrayList<ArrayList<Double>> MatA){      
 		this.suurus = MatA.size()-1;
 		this.MatA = MatA;
 	}
@@ -21,14 +32,14 @@ public class Maatriks {
 	double arvutaDeterminant(ArrayList<ArrayList<Integer>> A){  // siia panna viit permutatsioonide arvutusele?
 		double sum = 0;											//Teine võimalus on välja kutsudes anda kaasa
 		
-		for (ArrayList n : A){                                  //iga permutatsiooni kohta
+		for (ArrayList<Integer> n : A){                                  //iga permutatsiooni kohta
 			
 			double osaLiige = 1.0;
-			for (int i = 0; i< MatA.size()-1; i++ )  {            //Selles osas tuleb eelneva <double> seoses vead
+			for (int i = 0; i< MatA.size(); i++ )  {            //Selles osas tuleb eelneva <double> seoses vead
 				
-				ArrayList rida = MatA.get(i);
-				int o = (int) n.get(i);
-				osaLiige = osaLiige * rida.get(o);              //ei oska korrutada double * double 
+				ArrayList<Double> rida = MatA.get(i);
+				int o = (int) n.get(i)-1;
+				osaLiige = osaLiige * (double) rida.get(o);              //ei oska korrutada double * double 
 			}
 			
 			sum += osaLiige*sign(n);                            //arvutab märgi
@@ -38,8 +49,8 @@ public class Maatriks {
 	}
 	double substitutsioon(ArrayList<Integer> PermR){            //arvutab substitutsioonid(pole veel katsetanud)
 		int subst =0;
-		for (int i =0;i<PermR.size()-1;i++){
-			for (int j= 0;j<PermR.size()-1-i; j++){
+		for (int i =0;i<PermR.size();i++){
+			for (int j= i+1;j<PermR.size(); j++){
 			if (PermR.get(i) > PermR.get(i+j)){
 				subst+=1;
 				}
@@ -51,8 +62,9 @@ public class Maatriks {
 	}
 	
 	double sign(ArrayList<Integer> PermR){                     //otsustab märgi
-		if (substitutsioon(PermR)%2==1){
-			return 1;
-		}else return -1;
+		double x= substitutsioon(PermR);
+		if (x%2.0==0 || x==0){
+			return 1.0;
+		}else return -1.0;
 	}
 }
