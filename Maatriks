@@ -1,0 +1,58 @@
+import java.util.ArrayList;
+
+
+//Main klassis välja kutsed
+//Maatriks AA = new Maatriks(Maatriks kujul ArrayList ArrayList Double); 
+//AA.arvutaDeterminant(Perm.vastus())
+
+
+
+public class Maatriks {
+	
+	private int suurus;
+	public ArrayList<ArrayList<double>> MatA= new ArrayList<ArrayList<double>>(); // ei oska siia double sisse anda
+	
+	
+	Maatriks( ArrayList<ArrayList<double>> MatA){               // ja siin sama
+		this.suurus = MatA.size()-1;
+		this.MatA = MatA;
+	}
+	//Alustab determinandi arvutust
+	double arvutaDeterminant(ArrayList<ArrayList<Integer>> A){  // siia panna viit permutatsioonide arvutusele?
+		double sum = 0;											//Teine võimalus on välja kutsudes anda kaasa
+		
+		for (ArrayList n : A){                                  //iga permutatsiooni kohta
+			
+			double osaLiige = 1.0;
+			for (int i = 0; i< MatA.size()-1; i++ )  {            //Selles osas tuleb eelneva <double> seoses vead
+				
+				ArrayList rida = MatA.get(i);
+				int o = (int) n.get(i);
+				osaLiige = osaLiige * rida.get(o);              //ei oska korrutada double * double 
+			}
+			
+			sum += osaLiige*sign(n);                            //arvutab märgi
+		}
+		
+		return sum;                                             //tagastab determinandi
+	}
+	double substitutsioon(ArrayList<Integer> PermR){            //arvutab substitutsioonid(pole veel katsetanud)
+		int subst =0;
+		for (int i =0;i<PermR.size()-1;i++){
+			for (int j= 0;j<PermR.size()-1-i; j++){
+			if (PermR.get(i) > PermR.get(i+j)){
+				subst+=1;
+				}
+			}
+		}
+		return subst;
+		
+		
+	}
+	
+	double sign(ArrayList<Integer> PermR){                     //otsustab märgi
+		if (substitutsioon(PermR)%2==1){
+			return 1;
+		}else return -1;
+	}
+}
