@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-
+import javax.swing.JOptionPane;
 
 //Main klassis välja kutsed
 //ArrayList c = new ArrayList();
@@ -12,6 +12,7 @@ import java.util.ArrayList;
 //c.add(r1);
 //c.add(r2);
 //Maatriks AA = new Maatriks(Maatriks kujul ArrayList ArrayList Double); 
+// või Maatriks AA = new Maatriks("suvaline sõne"); //sisestus lausega loomiseks
 //ArrayList<ArrayList<Integer>> x = new ArrayList<ArrayList<Integer>>();
 //x=Perm.vastus();
 //AA.arvutaDeterminant(Perm.vastus())
@@ -23,11 +24,31 @@ public class Maatriks {
 	private int suurus;
 	public ArrayList<ArrayList<Double>> MatA= new ArrayList<ArrayList<Double>>();
 	
-	
 	Maatriks( ArrayList<ArrayList<Double>> MatA){      
 		this.suurus = MatA.size()-1;
 		this.MatA = MatA;
 	}
+	
+	Maatriks(String s){//s ei oma tähtsust, lihtsalt selleks, et eristada
+		String arv = JOptionPane.showInputDialog(null, "Sisesta maatriksi suurus", "Andmete sisestamine",JOptionPane.QUESTION_MESSAGE);
+		this.suurus = Integer.parseInt(arv);
+		
+		for (int i = 0; i<suurus; i++){ //Küsib rea kaupa andmeid
+			
+			ArrayList<Double> Rida = new ArrayList<Double>();		
+			String teade = "Palun sisesta "+(i+1)+". rea arvud kujul 1.0 eraldatud tühikuga.";
+			String Sisse = JOptionPane.showInputDialog(null, teade, "Andmete sisestamine",JOptionPane.QUESTION_MESSAGE);
+			
+			String[] osad = Sisse.split(" ");
+			for (String n: osad){
+
+				Rida.add(Double.parseDouble(n));
+			}
+			
+			MatA.add(Rida);
+		}
+	}
+	
 	//Alustab determinandi arvutust
 	double arvutaDeterminant(ArrayList<ArrayList<Integer>> A){  // siia panna viit permutatsioonide arvutusele?
 		double sum = 0;											//Teine võimalus on välja kutsudes anda kaasa
