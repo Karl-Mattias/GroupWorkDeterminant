@@ -13,11 +13,7 @@ import javax.swing.JOptionPane;
 //c.add(r2);
 //Maatriks AA = new Maatriks(Maatriks kujul ArrayList ArrayList Double); 
 // või Maatriks AA = new Maatriks("suvaline sõne"); //sisestus lausega loomiseks
-//ArrayList<ArrayList<Integer>> x = new ArrayList<ArrayList<Integer>>();
-//x=Perm.vastus();
-//AA.arvutaDeterminant(Perm.vastus())
-
-
+//AA.arvutaDeterminant();
 
 public class Maatriks {
 	
@@ -50,7 +46,11 @@ public class Maatriks {
 	}
 	
 	//Alustab determinandi arvutust
-	double arvutaDeterminant(ArrayList<ArrayList<Integer>> A){  // siia panna viit permutatsioonide arvutusele?
+	double arvutaDeterminant(){  // siia panna viit permutatsioonide arvutusele?
+		Permutatsioon Perm = new Permutatsioon(suurus);
+		ArrayList<ArrayList<Integer>> A = new ArrayList<ArrayList<Integer>>();
+		
+		A = Perm.vastus();
 		double sum = 0;											//Teine võimalus on välja kutsudes anda kaasa
 		
 		for (ArrayList<Integer> n : A){                                  //iga permutatsiooni kohta
