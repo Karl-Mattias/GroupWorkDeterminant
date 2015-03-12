@@ -21,7 +21,7 @@ public class Maatriks {
 	public ArrayList<ArrayList<Double>> MatA= new ArrayList<ArrayList<Double>>();
 	
 	Maatriks( ArrayList<ArrayList<Double>> MatA){      
-		this.suurus = MatA.size()-1;
+		this.suurus = MatA.size();
 		this.MatA = MatA;
 	}
 	
