@@ -12,20 +12,23 @@ import javax.swing.JOptionPane;
 //c.add(r1);
 //c.add(r2);
 //Maatriks AA = new Maatriks(Maatriks kujul ArrayList ArrayList Double); 
-// või Maatriks AA = new Maatriks("suvaline sõne"); //sisestus lausega loomiseks
+// või Maatriks AA = new Maatriks(); //sisestus lausega loomiseks
 //AA.arvutaDeterminant();
 
 public class Maatriks {
 	
-	private int suurus;
-	public ArrayList<ArrayList<Double>> MatA= new ArrayList<ArrayList<Double>>();
+	private int suurus; //Ruutmaatriksi mõõde
+	public ArrayList<ArrayList<Double>> MatA= new ArrayList<ArrayList<Double>>(); //Maatriks ise
 	
+	
+	//Generaator, millesse antakse maatriks valmis kujul
 	Maatriks( ArrayList<ArrayList<Double>> MatA){      
 		this.suurus = MatA.size();
 		this.MatA = MatA;
 	}
 	
-	Maatriks(String s){//s ei oma tähtsust, lihtsalt selleks, et eristada
+	//Generaator, mis loob maatriksi.
+	Maatriks(){
 		String arv = JOptionPane.showInputDialog(null, "Sisesta maatriksi suurus", "Andmete sisestamine",JOptionPane.QUESTION_MESSAGE);
 		this.suurus = Integer.parseInt(arv);
 		
@@ -46,44 +49,49 @@ public class Maatriks {
 	}
 	
 	//Alustab determinandi arvutust
-	double arvutaDeterminant(){  // siia panna viit permutatsioonide arvutusele?
+	double arvutaDeterminant(){ 
+		//Leaib kõik permutatsioonid
 		Permutatsioon Perm = new Permutatsioon(suurus);
 		ArrayList<ArrayList<Integer>> A = new ArrayList<ArrayList<Integer>>();
 		
 		A = Perm.vastus();
-		double sum = 0;											//Teine võimalus on välja kutsudes anda kaasa
+		double sum = 0;	
 		
-		for (ArrayList<Integer> n : A){                                  //iga permutatsiooni kohta
+		//Viib läbi arvutused iga permutatsiooniga
+		for (ArrayList<Integer> n : A){ 
 			
 			double osaLiige = 1.0;
-			for (int i = 0; i< MatA.size(); i++ )  {            //Selles osas tuleb eelneva <double> seoses vead
+			for (int i = 0; i< MatA.size(); i++ )  {
 				
 				ArrayList<Double> rida = MatA.get(i);
 				int o = (int) n.get(i)-1;
-				osaLiige = osaLiige * (double) rida.get(o);              //ei oska korrutada double * double 
+				osaLiige = osaLiige * (double) rida.get(o);
 			}
 			
-			sum += osaLiige*sign(n);                            //arvutab märgi
+			//Liidab summale osaliikme vastava märgiga
+			sum += osaLiige*sign(n);
 		}
 		
-		return sum;                                             //tagastab determinandi
+		//Tagastab determinandi
+		return sum;
 	}
-	double substitutsioon(ArrayList<Integer> PermR){            //arvutab substitutsioonid(pole veel katsetanud)
-		int subst =0;
+	
+	//arvutab inversioonid
+	double inversioon(ArrayList<Integer> PermR){
+		int inver =0;
 		for (int i =0;i<PermR.size();i++){
 			for (int j= i+1;j<PermR.size(); j++){
 			if (PermR.get(i) > PermR.get(i+j)){
-				subst+=1;
+				inver+=1;
 				}
 			}
 		}
-		return subst;
-		
-		
+		return inver;
 	}
 	
-	double sign(ArrayList<Integer> PermR){                     //otsustab märgi
-		double x= substitutsioon(PermR);
+	//otsustab märgi
+	double sign(ArrayList<Integer> PermR){
+		double x= inversioon(PermR);
 		if (x%2.0==0 || x==0){
 			return 1.0;
 		}else return -1.0;
