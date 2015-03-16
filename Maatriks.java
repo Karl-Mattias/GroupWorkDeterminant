@@ -1,19 +1,4 @@
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
-
-//Main klassis välja kutsed
-//ArrayList c = new ArrayList();
-//ArrayList r1 = new ArrayList();
-//ArrayList r2 = new ArrayList();
-//r1.add(5.0);
-//r1.add(3.0);
-//r2.add(1.0);
-//r2.add(1.0);
-//c.add(r1);
-//c.add(r2);
-//Maatriks AA = new Maatriks(Maatriks kujul ArrayList ArrayList Double); 
-// või Maatriks AA = new Maatriks(); //sisestus lausega loomiseks
-//AA.arvutaDeterminant();
 
 public class Maatriks {
 	
