@@ -16,8 +16,7 @@ public class Main {
 		if (valik == 1) {
 			Demo();
 		} else if (valik == 2) {
-			ArrayList<ArrayList<Double>> andmed = new ArrayList<ArrayList<Double>>();
-			andmed = sisestamine();
+			ArrayList<ArrayList<Double>> andmed= sisestamine();
 			
 			Maatriks X = new Maatriks(andmed);
 			double tulemus = X.arvutaDeterminant();
@@ -25,15 +24,20 @@ public class Main {
 			String esitus = "";
 			for (ArrayList<Double> n : andmed){
 				esitus += n+"\n";
-			};
+			}
 			
-			JOptionPane.showMessageDialog(null, esitus + "maatriksi determinant on " + tulemus ,"Tere!",1);
+			JOptionPane.showMessageDialog(null, esitus + "maatriksi determinant on " + tulemus ,"Vastus",1);
 		}
+        else{
+            while (valik !=1 && valik != 2){
+                valik = Integer.parseInt(JOptionPane.showInputDialog(null, message, "Valik", 1));
+            }
+        }
 	}
 	
 	public static ArrayList<ArrayList<Double>> sisestamine(){
 		ArrayList<ArrayList<Double>> loodav = new ArrayList<ArrayList<Double>>();
-		String arv = JOptionPane.showInputDialog(null, "Sisesta maatriksi suurus", "Andmete sisestamine",JOptionPane.QUESTION_MESSAGE);
+		String arv = JOptionPane.showInputDialog(null, "Sisesta maatriksi ridade arv", "Andmete sisestamine",JOptionPane.QUESTION_MESSAGE);
 		int suurus = Integer.parseInt(arv);
 		
 		for (int i = 0; i<suurus; i++){
@@ -44,7 +48,7 @@ public class Main {
 			
 			String[] osad = sisse.split(" ");
 			while(osad.length!= suurus){
-				teade = "Vigane sisestus, sisesta "+ (i+1)+". rida uuesti.";
+				teade = "Vigane sisestus, reas peab olema "+suurus+" arvu, sisesta "+ (i+1)+". rida uuesti.";
 				sisse = JOptionPane.showInputDialog(null, teade, "Andmete sisestamine",JOptionPane.QUESTION_MESSAGE);
 				osad = sisse.split(" ");
 			}
@@ -62,8 +66,8 @@ public class Main {
 	public static void Demo() {
 		ArrayList<ArrayList<Double>> demoAndmed = new ArrayList<ArrayList<Double>>();
 		
-		//genereeri demo maatriks
-		int suurus = 4;
+		//loob demo maatriksi
+		int suurus = Integer.parseInt(JOptionPane.showInputDialog(null, "Sisesta  demo maatriksi ridade arv", "Andmete sisestamine",JOptionPane.QUESTION_MESSAGE));
 		for (int i = 0; i < suurus; i++){
 			ArrayList<Double> rida = new ArrayList<Double>();
 			
@@ -77,14 +81,14 @@ public class Main {
 		}
 		
 		
-		//näita tu{lemust
+		//näita tulemust
 		Maatriks demoMaatriks = new Maatriks(demoAndmed);
 		double tulemus = demoMaatriks.arvutaDeterminant();
 		String esitus = "";
 		for (ArrayList<Double> n : demoAndmed){
 			esitus += n+"\n";
-		};
-		JOptionPane.showMessageDialog(null, esitus + "maatriksi determinant on " + tulemus ,"Tere!",1);
+		}
+		JOptionPane.showMessageDialog(null, esitus + "maatriksi determinant on " + tulemus ,"Vastus",1);
 	}
 
 }
