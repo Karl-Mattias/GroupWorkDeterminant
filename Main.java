@@ -15,7 +15,11 @@ class Main{
 		} else if (valik == 2) {
 			ArrayList<ArrayList<Double>> andmed = new ArrayList<ArrayList<Double>>();
 			andmed = sisestamine();
-			Maatriks A = new Maatriks(andmed);
+			for (ArrayList<Double> n : andmed){
+				System.out.println(n);
+			}
+			Maatriks X = new Maatriks(andmed);
+			System.out.println(X.arvutaDeterminant());
 		}
     }
     public static ArrayList<ArrayList<Double>> sisestamine(){
