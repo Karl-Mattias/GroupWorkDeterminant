@@ -27,27 +27,6 @@ public class Maatriks {
 		this.MatA = MatA;
 	}
 	
-	//Generaator, mis loob maatriksi.
-	Maatriks(){
-		String arv = JOptionPane.showInputDialog(null, "Sisesta maatriksi suurus", "Andmete sisestamine",JOptionPane.QUESTION_MESSAGE);
-		this.suurus = Integer.parseInt(arv);
-		
-		for (int i = 0; i<suurus; i++){ //Küsib rea kaupa andmeid
-			
-			ArrayList<Double> Rida = new ArrayList<Double>();		
-			String teade = "Palun sisesta "+(i+1)+". rea arvud kujul 1.0 eraldatud tühikuga.";
-			String Sisse = JOptionPane.showInputDialog(null, teade, "Andmete sisestamine",JOptionPane.QUESTION_MESSAGE);
-			
-			String[] osad = Sisse.split(" ");
-			for (String n: osad){
-
-				Rida.add(Double.parseDouble(n));
-			}
-			
-			MatA.add(Rida);
-		}
-	}
-	
 	//Alustab determinandi arvutust
 	double arvutaDeterminant(){ 
 		//Leaib kõik permutatsioonid
@@ -81,7 +60,7 @@ public class Maatriks {
 		int inver =0;
 		for (int i =0;i<PermR.size();i++){
 			for (int j= i+1;j<PermR.size(); j++){
-			if (PermR.get(i) > PermR.get(i+j)){
+			if (PermR.get(i) > PermR.get(j)){
 				inver+=1;
 				}
 			}
