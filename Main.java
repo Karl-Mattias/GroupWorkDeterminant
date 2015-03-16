@@ -15,25 +15,29 @@ class Main{
 		} else if (valik == 2) {
 			ArrayList<ArrayList<Double>> andmed = new ArrayList<ArrayList<Double>>();
 			andmed = sisestamine();
-			for (ArrayList<Double> n : andmed){
-				System.out.println(n);
-			}
+			
 			Maatriks X = new Maatriks(andmed);
-			System.out.println(X.arvutaDeterminant());
+			double tulemus = X.arvutaDeterminant();
+			
+			String esitus = "";
+			for (ArrayList<Double> n : andmed){
+				esitus += n+"\n";
+			};
+			
+			JOptionPane.showMessageDialog(null, esitus + "maatriksi determinant on " + tulemus ,"Tere!",1);
 		}
     }
     public static ArrayList<ArrayList<Double>> sisestamine(){
-		ArrayList<ArrayList<Double>> loodav = new ArrayList<ArrayList<Double>>();
-		String arv = JOptionPane.showInputDialog(null, "Sisesta maatriksi suurus", "Andmete sisestamine",JOptionPane.QUESTION_MESSAGE);
-		int suurus = Integer.parseInt(arv);
-		
-		for (int i = 0; i<suurus; i++){
+		ArrayList<Double> Rida = new ArrayList<Double>();		
+			String teade = "Palun sisesta "+(i+1)+". rea arvud tühikuga eraldatult.";
+			String sisse = JOptionPane.showInputDialog(null, teade, "Andmete sisestamine",JOptionPane.QUESTION_MESSAGE);
 			
-			ArrayList<Double> Rida = new ArrayList<Double>();		
-			String teade = "Palun sisesta "+(i+1)+". rea arvud kujul 1.0 eraldatud tühikuga.";
-			String Sisse = JOptionPane.showInputDialog(null, teade, "Andmete sisestamine",JOptionPane.QUESTION_MESSAGE);
-			
-			String[] osad = Sisse.split(" ");
+			String[] osad = sisse.split(" ");
+			while(osad.length!= suurus){
+				teade = "Vigane sisestus, sisesta "+ (i+1)+". rida uuesti.";
+				sisse = JOptionPane.showInputDialog(null, teade, "Andmete sisestamine",JOptionPane.QUESTION_MESSAGE);
+				osad = sisse.split(" ");
+			}
 			for (String n: osad){
 
 				Rida.add(Double.parseDouble(n));
@@ -42,11 +46,11 @@ class Main{
 			loodav.add(Rida);
 		}
 		
-		return loodav;		
+		return loodav;			
 	}
 	
 	public static void Demo() {
-		ArrayList<ArrayList<Double>> demoAndmed = new ArrayList<ArrayList<Double>>();
+	ArrayList<ArrayList<Double>> demoAndmed = new ArrayList<ArrayList<Double>>();
 		
 		//genereeri demo maatriks
 		int suurus = 4;
@@ -56,20 +60,20 @@ class Main{
 			for (int j = 0; j <suurus; j++){
 				//random double d
 				Random r = new Random();
-				Double d = r.nextDouble();
+				Double d = (double)Math.round((r.nextDouble())*10);
 				rida.add(d);
 			}
 			demoAndmed.add(rida);
 		}
 		
-		//Näita maatriksi
-		for (ArrayList<Double> n: demoAndmed){
-			System.out.println(n);
-		}
+		
 		//näita tu{lemust
 		Maatriks demoMaatriks = new Maatriks(demoAndmed);
-		System.out.println(demoMaatriks.arvutaDeterminant());
+		double tulemus = demoMaatriks.arvutaDeterminant();
+		String esitus = "";
+		for (ArrayList<Double> n : demoAndmed){
+			esitus += n+"\n";
+		};
+		JOptionPane.showMessageDialog(null, esitus + "maatriksi determinant on " + tulemus ,"Tere!",1);
 	}
-	
-	
 }
