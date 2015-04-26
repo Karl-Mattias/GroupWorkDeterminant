@@ -30,26 +30,30 @@ public class Main extends Application {
 			ChoiceBox menüü = new ChoiceBox(FXCollections.observableArrayList(
 				    "1", "2", "3"));
 			root.setTop(menüü);
-			menüü.getSelectionModel().selectedIndexProperty().addListener(
-					new ChangeListener<Number>() {
-						public void changed(ObservableValue ov, Number value, Number new_value) {
-							RIDA = (int)new_value +1;
-							VEERG =(int)new_value +1;
-				
-						}
-					});
-			
 			
 			GridPane lahtrid = new GridPane();
 			lahtrid.setAlignment(Pos.CENTER);
 			lahtrid.setVgap(10);
 			lahtrid.setHgap(10);
 			
-			for(int i = 0; i<RIDA; i++){	
-				for(int j = 0; j<VEERG; j++){
-					lahtrid.add(new TextField("0"), i, j);
-				}
-			}
+			menüü.getSelectionModel().selectedIndexProperty().addListener(
+					new ChangeListener<Number>() {
+						public void changed(ObservableValue ov, Number value, Number new_value) {
+							RIDA = (int)new_value +1;
+							VEERG =(int)new_value +1;
+							for(int i = 0; i<RIDA; i++){	
+								for(int j = 0; j<VEERG; j++){
+									lahtrid.add(new TextField("0"), i, j);
+								}
+							}
+							
+						}
+					});
+			
+			
+			
+			
+			
 			
 			root.setCenter(lahtrid);
 			int D = 0;
