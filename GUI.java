@@ -22,6 +22,7 @@ import javafx.scene.layout.VBox;
 public class Main extends Application {
 	static int RIDA = 2;
 	static int VEERG = 2;
+	static GridPane lahtrid;
 	
 	public void start(Stage primaryStage) {
 		try {
@@ -39,6 +40,12 @@ public class Main extends Application {
 			menüü.getSelectionModel().selectedIndexProperty().addListener(
 					new ChangeListener<Number>() {
 						public void changed(ObservableValue ov, Number value, Number new_value) {
+							
+							lahtrid = new GridPane();
+							lahtrid.setAlignment(Pos.CENTER);
+							lahtrid.setVgap(10);
+							lahtrid.setHgap(10);
+							
 							RIDA = (int)new_value +1;
 							VEERG =(int)new_value +1;
 							for(int i = 0; i<RIDA; i++){	
@@ -46,6 +53,7 @@ public class Main extends Application {
 									lahtrid.add(new TextField("0"), i, j);
 								}
 							}
+							root.setCenter(lahtrid);
 							
 						}
 					});
