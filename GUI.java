@@ -2,20 +2,20 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.SplitPane;
+import javafx.scene.Node;
+import javafx.scene.control.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
+import java.util.ArrayList;
+
 
 public class GUI extends Application {
-    private int suurus;
-    private GridPane lahtrid;
+    private static int suurus;
+    private static GridPane lahtrid;
 
     public void start(Stage primaryStage) {
         try {
@@ -49,18 +49,17 @@ public class GUI extends Application {
                         root.setCenter(lahtrid);
 
                     });
-
-
             SplitPane splitpane2 = new SplitPane();
-                        
+            BorderPane.setMargin(splitpane2, new Insets(0, 0, 30, 0));
+
             Label vastus = new Label("-");
             vastus.setFont(Font.font(18));
-            
+
             Button nupp = new Button("Arvuta determinant.");
             nupp.setOnAction(EventHandler->{
-              	vastus.setText("Determinant on " + Double.toString(nupuMeetod(lahtrid)));
+                vastus.setText("Determinant on " + Double.toString(nupuMeetod(lahtrid)));
             });
-            
+
             splitpane2.getItems().addAll(nupp, vastus);
             root.setBottom(splitpane2);
 
@@ -75,23 +74,20 @@ public class GUI extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
-    static void nupuMeetod(GridPane lahtrid) {
-		ArrayList<ArrayList<Double>> peamine = new ArrayList<ArrayList<Double>>();
-		for (int i = 0; i < suurus; i++){
-			peamine.add(new ArrayList<Double>());
-		}
-		for (Node TF : lahtrid.getChildren()){
-			int x = lahtrid.getColumnIndex(TF);
-			int y = lahtrid.getRowIndex(TF);
-			String s = ((TextField)TF).getText();
-			Double d = Double.parseDouble(s);
-			peamine.get(y).add(d);
-		}
-		
-		Maatriks MatA = new Maatriks(peamine);
-		MatA.arvutaDeterminant();
-		
-	}
-    
+
+    static Double nupuMeetod(GridPane lahtrid) {
+        ArrayList<ArrayList<Double>> peamine = new ArrayList<>();
+        for (int i = 0; i < suurus; i++){
+            peamine.add(new ArrayList<>());
+        }
+        for (Node TF : lahtrid.getChildren()){
+            int y = GridPane.getRowIndex(TF);
+            String s = ((TextField)TF).getText();
+            Double d = Double.parseDouble(s);
+            peamine.get(y).add(d);
+        }
+
+        Maatriks MatA = new Maatriks(peamine);
+        return MatA.arvutaDeterminant();
+    }
 }
