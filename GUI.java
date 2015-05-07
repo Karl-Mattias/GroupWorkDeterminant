@@ -77,6 +77,13 @@ public class GUI extends Application {
 
             Scene scene = new Scene(root,400,400);
             primaryStage.setScene(scene);
+            
+            primaryStage.addEventFilter(KeyEvent.KEY_PRESSED, event ->{
+            	if (event.getCode() == KeyCode.ESCAPE){
+            		System.exit(0);
+            	}
+            });
+            
             primaryStage.show();
         } catch(Exception e) {
             e.printStackTrace();
