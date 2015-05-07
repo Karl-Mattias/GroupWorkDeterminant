@@ -51,12 +51,18 @@ public class GUI extends Application {
                     });
 
 
-            root.setCenter(lahtrid);
-            int D = 0;
-            Label vastus = new Label("Determinant on " + D);
+            SplitPane splitpane2 = new SplitPane();
+                        
+            Label vastus = new Label("-");
             vastus.setFont(Font.font(18));
-
-            root.setBottom(vastus);
+            
+            Button nupp = new Button("Arvuta determinant.");
+            nupp.setOnAction(EventHandler->{
+              	vastus.setText("Determinant on " + Double.toString(nupuMeetod(lahtrid)));
+            });
+            
+            splitpane2.getItems().addAll(nupp, vastus);
+            root.setBottom(splitpane2);
 
             Scene scene = new Scene(root,400,400);
             primaryStage.setScene(scene);
