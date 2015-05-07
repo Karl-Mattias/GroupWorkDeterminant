@@ -57,7 +57,15 @@ public class GUI extends Application {
 
             Button nupp = new Button("Arvuta determinant.");
             nupp.setOnAction(EventHandler->{
-                vastus.setText("Determinant on " + Double.toString(nupuMeetod(lahtrid)));
+                try{
+              		vastus.setText("Determinant on " + Double.toString(nupuMeetod(lahtrid)));
+              	} catch (NullPointerException e) {
+              		String tekst = "Vali eelnevalt maatriksi suurus rippmenüüst.";
+              		teade(tekst);
+              	} catch (java.lang.NumberFormatException e) {
+              		String tekst = "Vigane andmete sisestus - kontrolli andmeid!";
+              		teade(tekst);
+              	}
             });
 
             splitpane2.getItems().addAll(nupp, vastus);
@@ -90,4 +98,31 @@ public class GUI extends Application {
         Maatriks MatA = new Maatriks(peamine);
         return MatA.arvutaDeterminant();
     }
+    
+    void teade(String tekst){
+		Stage teateAken = new Stage();
+        
+        Label label = new Label(tekst);
+        Button okButton = new Button("Ok");
+
+        okButton.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                teateAken.hide();
+            }
+        });
+        FlowPane pane = new FlowPane(10, 10);
+        pane.setAlignment(Pos.CENTER);
+        pane.getChildren().add(okButton);
+
+
+        VBox vBox = new VBox(10);
+        vBox.setAlignment(Pos.CENTER);
+        vBox.getChildren().addAll(label, pane);
+
+         Scene stseen2 = new Scene(vBox);
+         teateAken.setScene(stseen2);
+         teateAken.setTitle("Viga");
+         teateAken.show();
+     
+	}
 }
