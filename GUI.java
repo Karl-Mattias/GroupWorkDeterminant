@@ -71,4 +71,19 @@ public class GUI extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+    
+    static void nupuMeetod(GridPane lahtrid) {
+		
+		ArrayList A = new ArrayList();
+		for (Node TF : lahtrid.getChildren()){
+			int x = lahtrid.getColumnIndex(TF);
+			int Y = lahtrid.getRowIndex(TF);
+			String s = ((TextField)TF).getText();
+			System.out.println(s);
+	
+		}
+		//Maatriks MatA = new Maatriks(ArrayList<ArrayList<Double>> MatA);
+		//MatA.arvutaDeterminant();
+		
+	}
 }
