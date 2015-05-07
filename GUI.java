@@ -4,12 +4,16 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 
 
@@ -22,7 +26,7 @@ public class GUI extends Application {
             BorderPane root = new BorderPane();
 
             ChoiceBox menüü = new ChoiceBox<>(FXCollections.observableArrayList(
-                    "1", "2", "3", "4","5"));
+                    "1", "2", "3", "4","5","6","7","8","9","10"));
             Label text = new Label("Vali soovitud maatriksi suurus: ");
             text.setFont(Font.font(18));
             SplitPane splitpane = new SplitPane();
@@ -56,16 +60,16 @@ public class GUI extends Application {
             vastus.setFont(Font.font(18));
 
             Button nupp = new Button("Arvuta determinant.");
-            nupp.setOnAction(EventHandler->{
-                try{
-              		vastus.setText("Determinant on " + Double.toString(nupuMeetod(lahtrid)));
-              	} catch (NullPointerException e) {
-              		String tekst = "Vali eelnevalt maatriksi suurus rippmenüüst.";
-              		teade(tekst);
-              	} catch (java.lang.NumberFormatException e) {
-              		String tekst = "Vigane andmete sisestus - kontrolli andmeid!";
-              		teade(tekst);
-              	}
+            nupp.setOnAction(EventHandler -> {
+                try {
+                    vastus.setText("Determinant on " + Double.toString(nupuMeetod(lahtrid)));
+                } catch (NullPointerException e) {
+                    String tekst = "Vali eelnevalt maatriksi suurus rippmenüüst.";
+                    teade(tekst);
+                } catch (java.lang.NumberFormatException e) {
+                    String tekst = "Vigane andmete sisestus - kontrolli andmeid!";
+                    teade(tekst);
+                }
             });
 
             splitpane2.getItems().addAll(nupp, vastus);
@@ -96,20 +100,18 @@ public class GUI extends Application {
         }
 
         Maatriks MatA = new Maatriks(peamine);
-        return MatA.arvutaDeterminant();
+        BigDecimal bd = new BigDecimal(MatA.arvutaDeterminant()); //täpseks ümardamiseks BigDecimal
+        return bd.setScale(3, RoundingMode.HALF_UP).doubleValue();
     }
-    
+
     void teade(String tekst){
-		Stage teateAken = new Stage();
-        
+        Stage teateAken = new Stage();
+
         Label label = new Label(tekst);
+        label.setFont(Font.font(18));
         Button okButton = new Button("Ok");
 
-        okButton.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                teateAken.hide();
-            }
-        });
+        okButton.setOnAction(event -> teateAken.hide());
         FlowPane pane = new FlowPane(10, 10);
         pane.setAlignment(Pos.CENTER);
         pane.getChildren().add(okButton);
@@ -119,10 +121,9 @@ public class GUI extends Application {
         vBox.setAlignment(Pos.CENTER);
         vBox.getChildren().addAll(label, pane);
 
-         Scene stseen2 = new Scene(vBox);
-         teateAken.setScene(stseen2);
-         teateAken.setTitle("Viga");
-         teateAken.show();
-     
-	}
-}
+        Scene stseen2 = new Scene(vBox);
+        teateAken.setScene(stseen2);
+        teateAken.setTitle("Viga");
+        teateAken.show();
+
+    }
