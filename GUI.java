@@ -20,6 +20,7 @@ import java.util.ArrayList;
 public class GUI extends Application {
     private static int suurus;
     private static GridPane lahtrid;
+    static String FILENAME = "../MatrixLogFile.dat";
 
     public void start(Stage primaryStage) {
         try {
@@ -95,21 +96,62 @@ public class GUI extends Application {
     }
 
     static Double nupuMeetod(GridPane lahtrid) {
-        ArrayList<ArrayList<Double>> peamine = new ArrayList<>();
-        for (int i = 0; i < suurus; i++){
-            peamine.add(new ArrayList<>());
-        }
-        for (Node TF : lahtrid.getChildren()){
-            int y = GridPane.getRowIndex(TF);
-            String s = ((TextField)TF).getText();
-            Double d = Double.parseDouble(s);
-            peamine.get(y).add(d);
-        }
+        kirjutaFaili();
+        ArrayList<ArrayList<Double>> peamine = hangiAndmed();
 
         Maatriks MatA = new Maatriks(peamine);
         BigDecimal bd = new BigDecimal(MatA.arvutaDeterminant()); //täpseks ümardamiseks BigDecimal
         return bd.setScale(3, RoundingMode.HALF_UP).doubleValue();
     }
+
+static ArrayList<ArrayList<Double>> hangiAndmed() {
+		ArrayList<ArrayList<Double>> peamine = new ArrayList<ArrayList<Double>>();
+		for (int i = 0; i < suurus; i++){
+			peamine.add(new ArrayList<Double>());
+		}
+		for (Node TF : lahtrid.getChildren()){
+			int y = GridPane.getRowIndex(TF);
+			String s = ((TextField)TF).getText();
+			Double d = Double.parseDouble(s);
+			peamine.get(y).add(d);
+				
+		}
+		return peamine;
+	}
+
+static void kirjutaFaili () {//uus
+		ArrayList<ArrayList<Double>> peamine = hangiAndmed();
+		File file = new File(FILENAME);
+		System.out.println("Faili kirjtuatud");
+		try ( ObjectOutputStream OOS = new ObjectOutputStream(new FileOutputStream(file));) {
+			OOS.writeObject(peamine);
+			
+		} catch (Exception e) {
+			System.out.println("Probleem faili kirjutamsel");
+			String tekst = "Probleem andmete faili kirjutamisel.";
+      		teade(tekst);
+		}
+	}
+	static ArrayList<ArrayList<Double>> loeAndmedFailist() {
+		ArrayList<ArrayList<Double>> peamine = new ArrayList<ArrayList<Double>>();
+		File file = new File(FILENAME);
+		if (file.exists()) {
+			System.out.println("Faili lugemine");
+			try (ObjectInputStream OIS = new ObjectInputStream(new FileInputStream(file));)
+			{
+				while (OIS.available() == 0) {
+					ArrayList<ArrayList<Double>> loe = (ArrayList<ArrayList<Double>>)(OIS.readObject());
+					peamine = loe;
+				}//võtame viimase
+			
+			} catch (Exception e) {
+				String tekst = "Probleem failist lugemisel.";
+          		teade(tekst);
+			}	
+		}
+		
+		return peamine;
+	}
 
     void teade(String tekst){
         Stage teateAken = new Stage();
