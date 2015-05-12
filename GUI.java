@@ -73,7 +73,16 @@ public class GUI extends Application {
                 }
             });
 
-            splitpane2.getItems().addAll(nupp, vastus);
+	Button nupp2 = new Button("Taasta");
+	nupp2.setOnAction(EventHandler -> {
+            	try {
+            		täidaLahtridFailist();
+            	} catch (Exception e) {
+            		System.out.println(e);
+            	}
+            });
+
+            splitpane2.getItems().addAll(nupp, vastus, nupp2);
             root.setBottom(splitpane2);
 
             Scene scene = new Scene(root,400,400);
@@ -176,3 +185,15 @@ static void kirjutaFaili () {//uus
         teateAken.show();
 
     }
+    static void täidaLahtridFailist () {
+		ArrayList<ArrayList<Double>> peamine = loeAndmedFailist();
+		for (int i = 0; i < peamine.size(); i++) {
+			ArrayList<Double> D = peamine.get(i);
+			for (int j = 0; j < D.size(); j++) {
+				double d = D.get(j);
+				TextField tf = (TextField)lahtrid.getChildren().get((i*D.size())+j);
+				tf.setText(Double.toString(d));
+			}
+		}
+	}
+}
