@@ -16,6 +16,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 
+import java.io.EOFException;
 
 public class GUI extends Application {
     private static int suurus;
@@ -153,7 +154,8 @@ static void kirjutaFaili () {//uus
 					peamine = loe;
 				}//võtame viimase
 			
-			} catch (Exception e) {
+			} catch (EOFException e) {} 
+			catch (Exception e) {
 				String tekst = "Probleem failist lugemisel.";
           		teade(tekst);
 			}	
